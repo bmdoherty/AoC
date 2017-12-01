@@ -1,19 +1,8 @@
 
-const getDigit = (array, index, offset) => {
-  let digit = array[index + offset]
-  
-  // circular index
-  if(index+offset > array.length-1){
-    digit = array[ 0 - (array.length - index) + offset ]
-  }
-
-  return digit
-}
-
 const adder = (offset) => {
   
   return (accumulator, value, index, array) => {
-    let digit = getDigit(array, index, offset)
+    let digit = array[(index + offset) % array.length]
 
     if(value === digit){
       accumulator = accumulator + value
@@ -22,7 +11,6 @@ const adder = (offset) => {
     return accumulator
   }
 }
-
 
 const f = (str, type='part 1') => {
     let offset = 1
