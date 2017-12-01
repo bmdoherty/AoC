@@ -1,0 +1,25 @@
+{
+  "name": "euler-js",
+  "version": "1.0.0",
+  "description": "adveny of code 2017 in js",
+  "main": "1.js",
+  "scripts": {
+    "test": "jest -o"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmdoherty/euler-js.git"
+  },
+  "author": "bmdoherty",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmdoherty/euler-js/issues"
+  },
+  "homepage": "https://github.com/bmdoherty/euler-js#readme",
+  "devDependencies": {
+    "jest": "^20.0.4"
+  },
+  "dependencies": {
+    "big-integer": "^1.6.24"
+  }
+}
