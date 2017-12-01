@@ -1,16 +1,21 @@
 
+const getDigit = (array, index, offset) => {
+  let digit = array[index + offset]
+  
+  // circular index
+  if(index+offset > array.length-1){
+    digit = array[ 0 - (array.length - index) + offset ]
+  }
+
+  return digit
+}
+
 const adder = (offset) => {
   
   return (accumalator, value, index, array) => {
-    let next = array[index + offset]
-    
-    if(index+offset > array.length-1){
-      let i = 0 - (array.length - index) + offset
-      next = array[i]
-    }
-    // 1212
-    if(value === next){
-      //console.log(`${accumalator} + ${value}`)
+    let digit = getDigit(array, index, offset)
+
+    if(value === digit){
       accumalator = accumalator + value
     }
     
@@ -21,9 +26,11 @@ const adder = (offset) => {
 
 const f = (str, type='part 1') => {
     let offset = 1
+
     if(type === 'part 2'){
       offset = str.length / 2
     }
+    
     return str.split('').map(Number).reduce( adder(offset) , 0 )
 }
 
