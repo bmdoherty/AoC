@@ -12,14 +12,14 @@ const getDigit = (array, index, offset) => {
 
 const adder = (offset) => {
   
-  return (accumalator, value, index, array) => {
+  return (accumulator, value, index, array) => {
     let digit = getDigit(array, index, offset)
 
     if(value === digit){
-      accumalator = accumalator + value
+      accumulator = accumulator + value
     }
     
-    return accumalator
+    return accumulator
   }
 }
 
