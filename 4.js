@@ -10,7 +10,7 @@ const arePalidromes = (a, b) => {
 };
 
 const containsPalindrome = (word, index, passphrase) => {
-    let words = passphrase.slice(0).filter((v, i, a) => i !== index); //.splice(index, 1);
+    let words = passphrase.slice(0).filter((v, i, a) => i !== index);
 
     for (let i = 0; i < words.length; i++) {
         if (arePalidromes(word, words[i])) {
@@ -28,7 +28,7 @@ const level1 = str => {
 const level2 = str => {
     let words = str.split(" ").map(v => v.trim());
 
-    return !words.filter(containsPalindrome).length;
+    return !words.filter(containsPalindrome);
 };
 
 const f = (str, part = 1) => {
