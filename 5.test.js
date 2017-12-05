@@ -27,6 +27,8 @@ describe("Day 5", () => {
     });
 
     it("part 2", async () => {
+        console.time("timer");
         expect(f(data, 2)).toEqual(27283023);
+        console.timeEnd("timer");
     });
 });

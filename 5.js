@@ -21,9 +21,9 @@ const f = (str, part = 1) => {
     let i = 0;
 
     while (maze[i] !== undefined) {
-        let n = maze[i];
-        maze[i] = increment(n);
-        i = i + n;
+        let offset = maze[i];
+        maze[i] = increment(offset);
+        i = i + offset;
         steps++;
     }
 
