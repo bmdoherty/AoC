@@ -1,12 +1,33 @@
 const processInput = str => {
-    return str.trim().split(/\n/);
+    return str
+        .trim()
+        .split(/\n/)
+        .map(Number);
+};
+
+const part1 = n => {
+    return n + 1;
+};
+
+const part2 = n => {
+    return n + (n > 2 ? -1 : 1);
 };
 
 const f = (str, part = 1) => {
-    let securityLevel = part === 1 ? level1 : level2;
-    let passphrases = processInput(str);
+    let increment = part === 1 ? part1 : part2;
+    let maze = processInput(str);
 
-    return true;
+    let steps = 0;
+    let i = 0;
+
+    while (maze[i] !== undefined) {
+        let n = maze[i];
+        maze[i] = increment(n);
+        i = i + n;
+        steps++;
+    }
+
+    return steps;
 };
 
 module.exports = f;
