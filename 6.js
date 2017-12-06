@@ -6,6 +6,7 @@ const processInput = str => {
 };
 
 const spread = step => {
+    step = step.slice(0);
     let max = step.reduce((a, b) => Math.max(a, b));
     let block = step.indexOf(max);
 
@@ -37,7 +38,7 @@ const redistribute = step => {
 
             // thunked??
             // http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/
-            var op = fn;
+            let op = fn;
             while (op != null && typeof op === "function") {
                 op = op(spread(step));
             }
