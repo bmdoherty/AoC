@@ -15,18 +15,18 @@ describe("Day 6", () => {
     });
 
     it("part 1 example", async () => {
-        expect(f(`0\n3\n0\n1\n-3`)).toEqual(1);
+        expect(f(`0\t2\t7\t0`)).toEqual(5);
     });
 
     it("part 1", async () => {
-        expect(f(data)).toEqual(1);
+        expect(f(data)).toEqual(6681);
     });
 
     it("part 2 example", async () => {
-        expect(f(`0\n3\n0\n1\n-3`, 2)).toEqual(2);
+        expect(f(`0\t2\t7\t0`, 2)).toEqual(4);
     });
 
     it("part 2", async () => {
-        expect(f(data, 2)).toEqual(2);
+        expect(f(data, 2)).toEqual(2392);
     });
 });
