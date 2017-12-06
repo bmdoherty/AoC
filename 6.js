@@ -20,39 +20,38 @@ const spread = step => {
 };
 
 const redistribute = step => {
-    let terminator;
-    const fn = (step, steps = []) => {
-        if (contains(step, steps)) {
-            terminator = step;
+    let start;
+    let end;
+    let lookup = {};
+    let cycles = 1;
+
+    const fn = step => {
+        let key = step.join("-");
+
+        if (lookup[key]) {
+            start = lookup[key] - 1;
+            end = cycles - 1;
             return;
         } else {
-            steps.push(step);
-            fn(spread(step), steps);
+            lookup[key] = cycles++;
+
+            var op = fn; // thunked??
+            while (op != null && typeof op === "function") {
+                op = op(spread(step));
+            }
         }
 
-        return steps;
+        return [start, end];
     };
-    return [fn(step), terminator];
-};
 
-const contains = (step, steps) => {
-    return JSON.stringify(steps).indexOf(JSON.stringify(step)) > -1;
-};
-
-const loopStart = (step, steps) => {
-    let i = JSON.stringify(steps).indexOf(JSON.stringify(step));
-    let s = JSON.stringify(steps).slice(0, i - 1) + "]"; //hack saves some seconds
-
-    return JSON.parse(s).length;
+    return fn(step);
 };
 
 const f = (str, part = 1) => {
     let array = processInput(str);
-    let [steps, terminator] = redistribute(array);
+    let [start, end] = redistribute(array);
 
-    return part === 1
-        ? steps.length
-        : steps.length - loopStart(terminator, steps);
+    return part === 1 ? end : end - start;
 };
 
 module.exports = f;
