@@ -21,7 +21,7 @@ const spread = step => {
 
 const redistribute = step => {
     let terminator;
-    const fn = function(step, steps = []) {
+    const fn = (step, steps = []) => {
         if (contains(step, steps)) {
             terminator = step;
             return;
