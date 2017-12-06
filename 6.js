@@ -6,7 +6,6 @@ const processInput = str => {
 };
 
 const spread = step => {
-    step = step.slice(0);
     let max = step.reduce((a, b) => Math.max(a, b));
     let block = step.indexOf(max);
 
@@ -31,6 +30,7 @@ const redistribute = step => {
         if (lookup[key]) {
             start = lookup[key] - 1;
             end = cycles - 1;
+
             return;
         } else {
             lookup[key] = cycles++;
