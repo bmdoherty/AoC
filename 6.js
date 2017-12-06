@@ -35,6 +35,8 @@ const redistribute = step => {
         } else {
             lookup[key] = cycles++;
 
+            // thunked??
+            // http://www.thinkingincrowd.me/2016/06/06/How-to-avoid-Stack-overflow-error-on-recursive/
             var op = fn; // thunked??
             while (op != null && typeof op === "function") {
                 op = op(spread(step));
