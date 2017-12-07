@@ -41,12 +41,12 @@ const fix = (nodeMap, name) => {
         for (let childName of node.children) {
             let weight = 0;
             let child = nodeMap.find(v => v.name === childName);
-            let childSupports = child_weights(nodeMap, child.name);
+            let childSupports = child_weights(nodeMap, child.name).reduce(
+                (weight, v) => weight + v,
+                0
+            );
 
-            weight =
-                weight +
-                childSupports.reduce((weight, v) => weight + v, 0) +
-                child.weight;
+            weight = weight + childSupports + child.weight;
 
             supports.push(weight);
         }
