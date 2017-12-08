@@ -32,8 +32,28 @@ const checkCondition = (registers, condition) => {
     return eval(`registers['${condition.var}'] ${condition.operator} ${condition.value}`);
 };
 
-const initialise = (registers, variable) => {
-    registers[variable] = 0;
+const evaluateCommand = (registers, command) => {
+    let register = `registers['${command.var}']`;
+
+    switch (command.operator) {
+        case "inc":
+            expression = `${register} = ${register} + ${command.int}`;
+            break;
+        case "dec":
+            expression = `${register} = ${register} - ${command.int}`;
+            break;
+        default:
+            break;
+    }
+
+    eval(expression);
+};
+
+const initialise = (registers, instructions) => {
+    instructions.forEach((v, i, a) => {
+        registers[v.command.var] = 0;
+        registers[v.condition.var] = 0;
+    });
 };
 
 const max = registers => {
@@ -53,28 +73,13 @@ const f = (str, part = 1) => {
     let absoluteMax = 0;
     let registers = {};
 
-    instructions.forEach((v, i, a) => {
-        initialise(registers, v.command.var);
-        initialise(registers, v.condition.var);
-    });
+    initialise(registers, instructions);
 
     for (let i = 0; i < instructions.length; i++) {
         let instruction = instructions[i];
-        let register = `registers['${instruction.command.var}']`;
 
         if (checkCondition(registers, instruction.condition)) {
-            switch (instruction.command.operator) {
-                case "inc":
-                    expression = `${register} = ${register} + ${instruction.command.int}`;
-                    break;
-                case "dec":
-                    expression = `${register} = ${register} - ${instruction.command.int}`;
-                    break;
-                default:
-                    break;
-            }
-
-            eval(expression);
+            evaluateCommand(registers, instruction.command);
 
             if (max(registers) > absoluteMax) {
                 absoluteMax = max(registers);
