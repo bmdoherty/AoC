@@ -49,7 +49,7 @@ const max = registers => {
 
 const f = (str, part = 1) => {
     let instructions = processInput(str);
-    let maxValue = 0;
+    let absoluteMax = 0;
     let registers = {};
 
     instructions.forEach((v, i, a) => {
@@ -75,13 +75,13 @@ const f = (str, part = 1) => {
 
             eval(expression);
 
-            if (max(registers) > maxValue) {
-                maxValue = max(registers);
+            if (max(registers) > absoluteMax) {
+                absoluteMax = max(registers);
             }
         }
     }
 
-    return part === 1 ? max(registers) : maxValue;
+    return part === 1 ? max(registers) : absoluteMax;
 };
 
 module.exports = f;
