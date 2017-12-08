@@ -72,18 +72,12 @@ const f = (str, part = 1) => {
 
     initialise(registers, instructions);
 
-    for (let instruction of instructions) {
-        if (checkCondition(registers, instruction.condition)) {
-            switch (instruction.command.operator) {
-                case "inc":
-                    registers[instruction.command.var] = registers[instruction.command.var] + instruction.command.int;
-                    break;
-                case "dec":
-                    registers[instruction.command.var] = registers[instruction.command.var] - instruction.command.int;
-                    break;
-                default:
-                    break;
-            }
+    for (let i of instructions) {
+        if (checkCondition(registers, i.condition)) {
+            let a = registers[i.command.var];
+            let b = i.command.int;
+
+            registers[i.command.var] = o[i.command.operator](a, b);
 
             if (max(registers) > absoluteMax) {
                 absoluteMax = max(registers);
