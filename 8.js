@@ -17,7 +17,7 @@ const processInput = str => {
 
             condition = {
                 var: condition[0],
-                operator: condition[1],
+                operator: condition[1].trim(),
                 value: parseInt(condition[2], 10)
             };
 
@@ -28,25 +28,22 @@ const processInput = str => {
         });
 };
 
-const checkCondition = (registers, condition) => {
-    return eval(`registers['${condition.var}'] ${condition.operator} ${condition.value}`);
+const o = {
+    inc: (a, b) => a + b,
+    dec: (a, b) => a - b,
+    "==": (a, b) => a === b,
+    "!=": (a, b) => a !== b,
+    ">": (a, b) => a > b,
+    ">=": (a, b) => a >= b,
+    "<": (a, b) => a < b,
+    "<=": (a, b) => a <= b
 };
 
-const evaluateCommand = (registers, command) => {
-    let register = `registers['${command.var}']`;
+const checkCondition = (registers, condition) => {
+    let a = registers[condition.var];
+    let b = condition.value;
 
-    switch (command.operator) {
-        case "inc":
-            expression = `${register} = ${register} + ${command.int}`;
-            break;
-        case "dec":
-            expression = `${register} = ${register} - ${command.int}`;
-            break;
-        default:
-            break;
-    }
-
-    eval(expression);
+    return o[condition.operator](a, b);
 };
 
 const initialise = (registers, instructions) => {
@@ -77,7 +74,16 @@ const f = (str, part = 1) => {
 
     for (let instruction of instructions) {
         if (checkCondition(registers, instruction.condition)) {
-            evaluateCommand(registers, instruction.command);
+            switch (instruction.command.operator) {
+                case "inc":
+                    registers[instruction.command.var] = registers[instruction.command.var] + instruction.command.int;
+                    break;
+                case "dec":
+                    registers[instruction.command.var] = registers[instruction.command.var] - instruction.command.int;
+                    break;
+                default:
+                    break;
+            }
 
             if (max(registers) > absoluteMax) {
                 absoluteMax = max(registers);
