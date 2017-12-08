@@ -75,9 +75,7 @@ const f = (str, part = 1) => {
 
     initialise(registers, instructions);
 
-    for (let i = 0; i < instructions.length; i++) {
-        let instruction = instructions[i];
-
+    for (let instruction of instructions) {
         if (checkCondition(registers, instruction.condition)) {
             evaluateCommand(registers, instruction.command);
 
