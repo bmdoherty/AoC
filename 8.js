@@ -38,6 +38,7 @@ const initialise = (registers, variable) => {
 
 const max = registers => {
     let max = 0;
+
     for (let [key, value] of Object.entries(registers)) {
         if (value > max) {
             max = value;
