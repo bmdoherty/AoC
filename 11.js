@@ -60,15 +60,15 @@ function* walkMap(steps) {
 const f = (str, part = 1) => {
     let steps = processInput(str);
     let walk = walkMap(steps);
-    let maxDistance = 0;
+    let max = 0;
 
     for (var position of walk) {
-        if (hexDistance(position, [0, 0]) > maxDistance) {
-            maxDistance = hexDistance(position, [0, 0]);
+        if (hexDistance(position, [0, 0]) > max) {
+            max = hexDistance(position, [0, 0]);
         }
     }
 
-    return part === 1 ? hexDistance(position, [0, 0]) : maxDistance;
+    return part === 1 ? hexDistance(position, [0, 0]) : max;
 };
 
 module.exports = f;
