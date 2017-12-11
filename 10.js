@@ -34,7 +34,7 @@ const ciruclarSlice = (list, length, currentPosition, skipSize) => {
     list = insert(list, selected.reverse(), currentPosition);
     currentPosition = (currentPosition + (length + skipSize)) % list.length;
 
-    return [list, currentPosition % list.length];
+    return [list, currentPosition];
 };
 
 const knotHash = (input, lengths, currentPosition = 0, skipSize = 0) => {
