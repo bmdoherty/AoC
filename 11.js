@@ -7,12 +7,12 @@ const hexDistance = (pointA, pointB) => {
     let dy = pointB[1] - pointA[1];
 
     let dd = dy - dx;
+
     return Math.max(Math.abs(dx), Math.abs(dy), Math.abs(dd));
 };
 
 function* walkMap(steps) {
     let i = 0;
-
     let x = 0;
     let y = 0;
 
