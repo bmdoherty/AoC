@@ -15,10 +15,10 @@ const nodeInGroup = (node, group) => {
     return group.find(v => v === node.id) || group.some(v => node.children.indexOf(v) > -1);
 };
 
-const findGroup = (nodes, root) => {
-    let group = [root];
+const findGroup = (nodes, id) => {
+    let group = [id];
 
-    const fn = (nodesArr, id) => {
+    const fn = id => {
         let node = nodes.find(v => v.id === id);
         nodes = nodes.filter(v => v.id !== id);
 
@@ -34,14 +34,14 @@ const findGroup = (nodes, root) => {
             return;
         } else {
             for (let child of node.children) {
-                fn(nodes, child);
+                fn(child);
             }
         }
 
         return group;
     };
 
-    return new Set(fn(nodes, root));
+    return new Set(fn(id));
 };
 
 const f = (str, part = 1) => {
