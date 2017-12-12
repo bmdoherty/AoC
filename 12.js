@@ -15,16 +15,23 @@ const nodeInGroup = (node, group) => {
     return group.find(v => v === node.id) || group.some(v => node.children.indexOf(v) > -1);
 };
 
+const removeNode = (node, nodes) => {
+    let index = nodes.findIndex(v => v.id === node.id);
+    if (index > -1) {
+        return nodes.splice(index, 1);
+    }
+};
+
 const findGroup = (nodes, id) => {
     let group = [id];
 
     const fn = id => {
         let node = nodes.find(v => v.id === id);
-        nodes = nodes.filter(v => v.id !== id);
-
         if (!node) {
             return;
         }
+
+        removeNode(node, nodes);
 
         if (nodeInGroup(node, group)) {
             group.push(node.id);
@@ -56,7 +63,6 @@ const f = (str, part = 1) => {
         let group = findGroup(nodes, node.id);
 
         groups.push(group);
-        nodes = nodes.filter(v => !group.has(v.id));
     }
 
     return part === 1 ? groups[0].size : groups.length;
