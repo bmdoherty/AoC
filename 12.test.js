@@ -15,13 +15,16 @@ describe("Day 12", () => {
     beforeAll(async () => {
         await myReadfile();
     });
-
-    it("part 1", async () => {
+    it("part 1 example", async () => {
         expect(f(data1)).toEqual(6);
     });
 
-    it("part 1", async () => {
+    it("part 2 example", async () => {
         expect(f(data1, 2)).toEqual(2);
+    });
+
+    it("part 1", async () => {
+        expect(f(data2)).toEqual(169);
     });
 
     it("part 2", async () => {
