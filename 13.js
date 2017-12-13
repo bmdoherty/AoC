@@ -33,6 +33,7 @@ const part2 = scanners => {
     while (scanners.filter(isCaught(delay)).length) {
         delay++;
     }
+
     return delay;
 };
 
