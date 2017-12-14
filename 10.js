@@ -46,11 +46,10 @@ const knotHash = (input, lengths, currentPosition = 0, skipSize = 0) => {
     return [input, currentPosition, skipSize];
 };
 
-const chunk = input => {
-    let chunk = 16;
+const chunk = (input, size) => {
     let chunked = [];
-    for (let i = 0; i < input.length; i = i + chunk) {
-        let tmp = input.slice(i, i + chunk);
+    for (let i = 0; i < input.length; i = i + size) {
+        let tmp = input.slice(i, i + size);
         chunked.push(tmp);
     }
 
@@ -62,7 +61,8 @@ const part1 = (list, lengths) => {
     return input[0] * input[1];
 };
 
-const part2 = (input, lengths) => {
+const knotHash64 = (input, lengths) => {
+    input = input.slice(0);
     const suffix = [17, 31, 73, 47, 23];
     let round = 0;
     let skipSize = 0;
@@ -79,7 +79,7 @@ const part2 = (input, lengths) => {
         round++;
     }
 
-    let hex = chunk(input)
+    let hex = chunk(input, 16)
         .map(v => v.reduce((a, b) => a ^ b))
         .map(v => v.toString(16).padStart(2, "0"))
         .join("");
@@ -88,7 +88,7 @@ const part2 = (input, lengths) => {
 };
 
 const f = (list, lengths, part = 1) => {
-    return part === 1 ? part1(list, lengths) : part2(list, lengths);
+    return part === 1 ? part1(list, lengths) : knotHash64(list, lengths);
 };
 
-module.exports = f;
+module.exports = { f, knotHash64, chunk };
