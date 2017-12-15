@@ -3,7 +3,7 @@
 // change to your key, this is mine
 let key = "stpzcrnm";
 // paint delay in ms
-let ms = 20;
+let ms = 2;
 
 const extract = (list, length, currentPosition) => {
     let selected = [];
