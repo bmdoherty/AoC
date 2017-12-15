@@ -1,30 +1,47 @@
+// const bigInt = require("big-integer");
+
 function* generatorMaker(start, factor) {
-    let current = start;
+    let previous = start;
+    let remainder = 0;
     let divisor = 2147483647;
 
     while (true) {
-        current = start * factor / divisor;
-        yield start * factor;
+        remainder = (previous * factor) % divisor;
+
+        previous = remainder;
+        yield remainder;
     }
 }
-// Generator A starts with 116
-// Generator B starts with 299
 
-// The generators both work on the same principle. To create its next value, a generator will take the previous value it produced,
-// multiply it by a factor (generator A uses 16807; generator B uses 48271),
-// and then keep the remainder of dividing that resulting product by 2147483647. That final remainder is the value it produces next.
-
-// --Gen. A--  --Gen. B--
-// 1092455   430625591
-// 1181022009  1233683848
-// 245556042  1431495498
-// 1744312007   137874439
-// 1352636452   285222916
+function lowest16Bits(dec) {
+    return dec
+        .toString(2)
+        .padStart(32, "0")
+        .slice(16);
+}
 
 const matched = (a, b) => {
-    let generatorA = generatorMaker(a.start, a.factor);
+    let matched = 0;
+    let pairsRequired = 40000000;
+    let i = 0;
 
-    return 5;
+    let generatorA = generatorMaker(a.start, a.factor);
+    let generatorB = generatorMaker(b.start, b.factor);
+
+    const mask = (1 << 16) - 1;
+
+    while (i <= pairsRequired) {
+        let a = generatorA.next().value;
+        let b = generatorB.next().value;
+
+        if ((a & mask) === (b & mask)) {
+            matched++;
+        }
+
+        i++;
+    }
+
+    return matched;
 };
 
 const f = (a, b, part = 1) => {
