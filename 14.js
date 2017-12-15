@@ -26,6 +26,51 @@ const makeGrid = (size, input, key) => {
     return grid;
 };
 
+const getRegion = (grid, x, y) => {
+    let region = [];
+    let seenInRegion = {};
+    // console.log(`x:${x} y:${y}`);
+    const checkCell = (x, y) => {
+        let key = `${x}:${y}`;
+
+        if (seenInRegion[key]) {
+            return;
+        }
+        seenInRegion[key] = true;
+
+        // if (x === 5 && y === 0) {
+        //     console.log(grid[0].slice(0, 8).join(" "));
+        //     console.log(`x:${x} y:${y} used:${grid[y][x]}`);
+        // }
+
+        if (grid[y][x] !== 1) {
+            return;
+        } else {
+            region.push([x, y]);
+            // console.log(region);
+
+            if (y < 127) {
+                checkCell(x, y + 1); // check bottom
+            }
+
+            if (y > 0) {
+                checkCell(x, y - 1); // check top
+            }
+
+            if (x > 0) {
+                checkCell(x - 1, y); // check left
+            }
+
+            if (x < 127) {
+                checkCell(x + 1, y); // check right
+            }
+        }
+
+        return region;
+    };
+
+    return checkCell(x, y);
+};
 const totalUsed = (input, key) => {
     let grid = makeGrid(128, input, key);
 
@@ -37,29 +82,28 @@ const totalRegions = (input, key) => {
     let regions = [];
     let seen = {};
 
-    // for (let x = 0; x < grid.length; x++) {
-    //     for (let y = 0; y < grid.length; y++) {
-    //         seen[`${x}:${y}`] = false;
-    //     }
-    // }
+    for (let y = 0; y < grid.length; y++) {
+        for (let x = 0; x < grid.length; x++) {
+            let key = `${x}:${y}`;
 
-    // for (let x = 0; x < grid.length; x++) {
-    //     for (let y = 0; y < 1; y++) {
-    //         if (!seen[`${x}:${y}`]) {
-    //             if (grid[x][y] === 1) {
-    //                 let regionCount = regions.length;
-    //                 let cell = { x: x, y: y };
+            if (!seen[key]) {
+                // console.log(key);
+                if (grid[y][x] === 1) {
+                    //regions;
+                    let region = getRegion(grid, x, y);
+                    region.forEach(it => {
+                        let key = `${it[0]}:${it[1]}`;
+                        seen[key] = true;
+                    });
 
-    //                 //regions;
-    //                 console.log(`${x} ${y} ${grid[y][x]} ${used}`);
-    //                 regions++;
-    //             }
-    //             seen[`${x}:${y}`] = true;
-    //         }
-    //     }
-    //     //8250;
-    // }
-    return 1242;
+                    regions.push(region);
+                }
+            }
+        }
+    }
+
+    console.log(regions[0]);
+    return regions.length;
 };
 
 const f = (input, key, part = 1) => {
@@ -67,3 +111,7 @@ const f = (input, key, part = 1) => {
 };
 
 module.exports = f;
+
+let input = Array.from(Array(256).keys());
+let key = "stpzcrnm";
+f(input, key, 2);
