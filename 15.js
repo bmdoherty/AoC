@@ -1,6 +1,4 @@
-// const bigInt = require("big-integer");
-
-function* generatorMaker(start, factor) {
+function* generatorMaker(start, factor, multiple = 1) {
     let previous = start;
     let remainder = 0;
     let divisor = 2147483647;
@@ -9,24 +7,30 @@ function* generatorMaker(start, factor) {
         remainder = (previous * factor) % divisor;
 
         previous = remainder;
-        yield remainder;
+        if (remainder % multiple === 0) {
+            yield remainder;
+        }
     }
 }
 
-function lowest16Bits(dec) {
-    return dec
-        .toString(2)
-        .padStart(32, "0")
-        .slice(16);
-}
-
-const matched = (a, b) => {
+const matched = (a, b, multiples = false) => {
     let matched = 0;
-    let pairsRequired = 40000000;
     let i = 0;
+    let pairsRequired;
+    let generatorA;
+    let generatorB;
 
-    let generatorA = generatorMaker(a.start, a.factor);
-    let generatorB = generatorMaker(b.start, b.factor);
+    if (multiples) {
+        pairsRequired = 5000000;
+
+        generatorA = generatorMaker(a.start, a.factor, 4);
+        generatorB = generatorMaker(b.start, b.factor, 8);
+    } else {
+        pairsRequired = 40000000;
+
+        generatorA = generatorMaker(a.start, a.factor);
+        generatorB = generatorMaker(b.start, b.factor);
+    }
 
     const mask = (1 << 16) - 1;
 
@@ -45,7 +49,7 @@ const matched = (a, b) => {
 };
 
 const f = (a, b, part = 1) => {
-    return part === 1 ? matched(a, b) : totalRegions(input, key);
+    return part === 1 ? matched(a, b) : matched(a, b, true);
 };
 
 module.exports = f;
