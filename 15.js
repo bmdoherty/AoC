@@ -5,8 +5,8 @@ function* generatorMaker(start, factor, multiple = 1) {
 
     while (true) {
         remainder = (previous * factor) % divisor;
-
         previous = remainder;
+
         if (remainder % multiple === 0) {
             yield remainder;
         }
@@ -20,6 +20,8 @@ const matched = (a, b, multiples = false) => {
     let generatorA;
     let generatorB;
 
+    const mask = (1 << 16) - 1;
+
     if (multiples) {
         pairsRequired = 5000000;
 
@@ -31,8 +33,6 @@ const matched = (a, b, multiples = false) => {
         generatorA = generatorMaker(a.start, a.factor);
         generatorB = generatorMaker(b.start, b.factor);
     }
-
-    const mask = (1 << 16) - 1;
 
     while (i <= pairsRequired) {
         let a = generatorA.next().value;
