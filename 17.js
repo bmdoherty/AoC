@@ -12,37 +12,24 @@ const part1 = (limit, step) => {
     return buffer[++position];
 };
 
-const part2 = (limit, step) => {
+const part2 = (limit, step, watchedIndex) => {
     let i = 0;
     let position = 0;
-    let oneth;
+    let watchedIndexValue;
 
     while (i < limit) {
         i++;
         position = (position + step) % i + 1;
-        if (position % i === 1) {
-            oneth = i;
+        if (position % i === watchedIndex) {
+            watchedIndexValue = i;
         }
     }
 
-    return oneth;
+    return watchedIndexValue;
 };
 
 const f = (limit, step, part = 1) => {
-    // console.log(buffer);
-    return part === 1 ? part1(limit, step) : part2(limit, step);
+    return part === 1 ? part1(limit, step) : part2(limit, step, 1);
 };
 
 module.exports = f;
-
-// console.log(f(50000000, 369));
-// (0)
-// 0 (1)
-// 0 (2) 1
-// 0  2 (3) 1
-// 0  2 (4) 3  1
-// 0 (5) 2  4  3  1
-// 0  5  2  4  3 (6) 1
-// 0  5 (7) 2  4  3  6  1
-// 0  5  7  2  4  3 (8) 6  1
-// 0 (9) 5  7  2  4  3  8  6  1

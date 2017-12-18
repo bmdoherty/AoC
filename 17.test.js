@@ -13,7 +13,7 @@ describe("Day 17", () => {
         expect(f(2017, 369)).toEqual(1547);
     });
 
-    it("part 1", () => {
+    it("part 2", () => {
         expect(f(50000000, 369, 2)).toEqual(31154878);
     });
 });
