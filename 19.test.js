@@ -19,4 +19,12 @@ describe("Day 19", () => {
     it("part 1 example", () => {
         expect(f(data1)).toEqual("ABCDEF");
     });
+
+    it("part 1", () => {
+        expect(f(data)).toEqual("MKXOIHZNBL");
+    });
+
+    it("part 2", () => {
+        expect(f(data, 2)).toEqual(17872);
+    });
 });
