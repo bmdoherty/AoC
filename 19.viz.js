@@ -1,3 +1,6 @@
+// change w (width of cells) to zoom into top left
+var w = 3.65; //3.65
+
 const processInput = str => {
     return str.split(/\n/).map(v => v.split(""));
 };
@@ -69,7 +72,7 @@ const findPath = (grid, node, direction) => {
                     break;
             }
 
-            steps.push([x, y]);
+            steps.push({ cord: [x, y], chr: chr });
 
             i++;
             chr = grid[y][x];
@@ -119,7 +122,47 @@ async function demo(ctx, str) {
     let { letters, steps } = f(str);
     let color = getRandomColor();
     for (let step of steps) {
-        await paint(ctx, step, color, ms);
+        await paint(ctx, step["cord"], color, ms);
+        if (isLetter(step["chr"])) {
+            document.getElementById("log").innerHTML += step["chr"];
+        }
+    }
+}
+
+var ctx = document.getElementById("canvas").getContext("2d");
+var ms = 0;
+
+function setup(ctx, grid) {
+    let i = 0;
+    let j = 0;
+    offsets = {
+        "+": [0.12, 0.9, 1.5],
+        "|": [0.4, 1, 1.5],
+        "-": [0.1, 1.15, 2.75],
+        X: [0.15, 0.8, 1],
+        " ": [0.25, 0.7, 0.9]
+    };
+    let color = getRandomColor();
+    for (let x = 0; x < grid[0].length; x++) {
+        for (let y = 0; y < grid.length; y++) {
+            let content = grid[y][x];
+            let offset;
+            if (isLetter(content)) {
+                offset = offsets["X"];
+            } else {
+                offset = offsets[content];
+            }
+
+            ctx.fillStyle = color;
+            ctx.fillRect(x * w, y * w, w, w);
+            ctx.fillStyle = "white";
+            let offsetX = w * offset[0];
+            let offsetY = w * offset[1];
+            let fontSize = w * offset[2];
+            ctx.font = fontSize + "px serif";
+
+            ctx.fillText(content, x * w + offsetX, y * w + offsetY);
+        }
     }
 }
 
@@ -324,43 +367,6 @@ var str = `                                                                     
  |                                                                                       |                                                                             |       |               |   |     
  +---------------------------------------------------------------------------------------+                                                                             +-------+               +---+     
                                                                                                                                                                                                           `;
-
 var grid = processInput(str);
-
-var ctx = document.getElementById("canvas").getContext("2d");
-var w = 3.65;
-var ms = 0;
-
-let i = 0;
-let j = 0;
-offsets = {
-    "+": [0.25, 0.7, 0.9],
-    "|": [0.4, 0.8, 0.9],
-    "-": [0.013, 1.15, 3],
-    X: [0.15, 0.8, 1],
-    " ": [0.25, 0.7, 0.9]
-};
-let color = getRandomColor();
-for (let x = 0; x < grid[0].length; x++) {
-    for (let y = 0; y < grid.length; y++) {
-        let content = grid[x][y];
-        let offset;
-        if (isLetter(content)) {
-            offset = offsets["X"];
-        } else {
-            offset = offsets[content];
-        }
-
-        ctx.fillStyle = color;
-        ctx.fillRect(x * w, y * w, w, w);
-        ctx.fillStyle = "white";
-        let offsetX = w * offset[0];
-        let offsetY = w * offset[1];
-        let fontSize = w * offset[2];
-        ctx.font = fontSize + "px serif";
-
-        ctx.fillText(content, x * w + offsetX, y * w + offsetY);
-    }
-}
-
+setup(ctx, grid);
 demo(ctx, str);
