@@ -33,18 +33,4 @@ describe("Day 18", () => {
     it("part 2", () => {
         expect(f(data, 2)).toEqual(7620);
     });
-
-    // it("part 1", async () => {
-    //     let line = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"];
-    //     let dance = data1.split(",");
-
-    //     expect(f(line, dance)).toEqual("cgpfhdnambekjiol");
-    // });
-
-    // it("part 2", async () => {
-    //     let line = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p"];
-    //     let dance = data1.split(",");
-
-    //     expect(f(line, dance, 2)).toEqual("gjmiofcnaehpdlbk");
-    // });
 });
