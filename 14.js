@@ -102,7 +102,7 @@ const totalRegions = (input, key) => {
         }
     }
 
-    console.log(regions[0]);
+    //console.log(regions[0]);
     return regions.length;
 };
 

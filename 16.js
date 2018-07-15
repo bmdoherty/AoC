@@ -33,7 +33,7 @@ const f = (line, dance, part = 1) => {
 
     while (i < limit && !seen.includes(line.join(""))) {
         seen.push(line.join(""));
-        for (step of dance) {
+        for (let step of dance) {
             let arr = step.split("");
             let key = arr.shift();
             let args = arr.join("").split("/");
