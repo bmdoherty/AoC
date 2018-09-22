@@ -21,7 +21,7 @@
         "webpack": "^4.16.4",
         "@babel/core": "^8.0.0",
         "@babel/preset-env": "^7.0.0-beta.55",
-        "babel-eslint": "^8.2.6",
+        "babel-eslint": "^9.0.0",
         "babel-loader": "^8.0.2",
         "babel-preset-env": "^1.7.0",
         "eslint": "^5.5.0"
